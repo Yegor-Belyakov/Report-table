@@ -2,11 +2,10 @@ import React, { useState } from "react";
 
 import Table from "react-bootstrap/Table";
 import Modal from "./modal/Modal";
-import Pagination from "./pagination";
+import Pagination from "./pagination/pagination";
 import { paginate } from "../utils/paginate";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import { CardImg } from "react-bootstrap";
+
+import InfoCard from "./infoCard/InfoCard";
 
 function Report({ fruits, handleDelete, setFruits }) {
   const [fruit, setFruit] = useState({
@@ -31,10 +30,8 @@ function Report({ fruits, handleDelete, setFruits }) {
 
   const [newName, setNewName] = useState("");
   const nameChangeHandler = (id) => {
-    
     setFruits((prevFruits) =>
       prevFruits.map((el) => {
-       
         if (el.dataField === id) {
           el.caption = newName;
           return el;
@@ -176,29 +173,10 @@ function Report({ fruits, handleDelete, setFruits }) {
       />
       {showInfoModal && currentFruit && (
         <Modal visible={showInfoModal} setVisible={setShowInfoModal}>
-          {
-            <>
-              <Card style={{ width: "18rem" }}>
-                <CardImg src="https://picsum.photos/400/200" />
-                <Card.Body>
-                  <Card.Title>{currentFruit.caption} </Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {currentFruit.dataType}
-                  </Card.Subtitle>
-                  <Card.Text>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Adipisci, blanditiis? {currentFruit.alignment}
-                  </Card.Text>
-                  <Button
-                    variant="primary"
-                    onClick={() => setShowInfoModal(false)}
-                  >
-                    Close info
-                  </Button>
-                </Card.Body>
-              </Card>
-            </>
-          }
+          <InfoCard
+            currentFruit={currentFruit}
+            setShowInfoModal={setShowInfoModal}
+          />
         </Modal>
       )}
     </>
